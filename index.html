@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ormanİzin — Test & Geliştirme Platformu</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .glassmorphism {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .dark .glassmorphism {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+    .animate-glow {
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- ================= TOP NOTIFICATION BAR ================= -->
+  <aside aria-label="Sistem Bildirimi" class="bg-gradient-to-r from-brand-700 via-emerald-600 to-teal-600 text-white text-xs py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2 shadow-inner">
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-300 animate-ping"></span>
+    <span><strong>TEST ORTAMI AKTİF:</strong> Bu sayfa arayüz, tarayıcı performansı ve bileşen testleri için hazırlanmıştır.</span>
+    <span class="hidden md:inline text-emerald-200">| Sürüm: v1.0.0-test</span>
+  </aside>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="sticky top-0 z-40 glassmorphism border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-emerald-700 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+          <!-- Tree SVG Icon -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L8 8h3v5H8l4 6 4-6h-3V8h3L12 2zM12 19v3"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">Ormanİzin</span>
+            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800">Test</span>
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-none">Doğrulama & Deneme Portalı</p>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300">
+        <a href="#genel-bakis" class="px-3 py-2 rounded-lg hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition">Genel Bakış</a>
+        <a href="#test-alani" class="px-3 py-2 rounded-lg hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition">Test Alanı</a>
+        <a href="#sistem-durumu" class="px-3 py-2 rounded-lg hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition">Sistem Tanılamaları</a>
+        <a href="#bilesenler" class="px-3 py-2 rounded-lg hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition">Bileşenler</a>
+      </nav>
+
+      <!-- Right Action Items -->
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle Button -->
+        <button id="themeToggleBtn" aria-label="Karanlık/Aydınlık Modu Değiştir" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm">
+          <!-- Sun Icon -->
+          <svg id="sunIcon" class="w-4 h-4 hidden dark:block text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+          </svg>
+          <!-- Moon Icon -->
+          <svg id="moonIcon" class="w-4 h-4 block dark:hidden text-slate-600" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+        </button>
+
+        <!-- Quick Action CTA -->
+        <a href="#test-alani" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 active:scale-95 shadow-sm shadow-brand-600/30 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>Testi Başlat</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-grow">
+    
+    <!-- Hero Section -->
+    <section id="genel-bakis" class="relative overflow-hidden py-16 lg:py-24 border-b border-slate-200 dark:border-slate-800">
+      <!-- Glow background blobs -->
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-400/20 dark:bg-brand-600/10 rounded-full blur-3xl pointer-events-none animate-glow"></div>
+      <div class="absolute top-1/3 right-10 w-72 h-72 bg-teal-400/20 dark:bg-teal-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-100/80 dark:bg-brand-950/60 border border-brand-200 dark:border-brand-800 text-brand-700 dark:text-brand-300 text-xs font-semibold mb-6 shadow-sm">
+            <span class="flex h-2 w-2 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+            </span>
+            Prototip & Doğrulama Sayfası v1.0
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            Modern ve Hızlı <br/>
+            <span class="bg-gradient-to-r from-brand-600 via-emerald-500 to-teal-600 bg-clip-text text-transparent">Web Test Platformu</span>
+          </h1>
+
+          <p class="mt-6 text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+            Bu sayfa tek sayfalık hafif, duyarlı (responsive) ve etkileşimli bir test şablonudur.
+            Bileşen testleri, JavaScript motor durumu, stil doğrulama ve API simülasyonları içerir.
+          </p>
+
+          <!-- Quick Metrics Bar -->
+          <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm text-center">
+              <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Durum</span>
+              <div class="mt-1 text-2xl font-bold text-brand-600 dark:text-brand-400 flex items-center justify-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-500"></span>
+                <span>200 OK</span>
+              </div>
+              <span class="text-[11px] text-slate-400">Sayfa Hazır</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm text-center">
+              <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Gecikme (Ping)</span>
+              <div id="pingMetric" class="mt-1 text-2xl font-bold text-slate-800 dark:text-slate-100">
+                12 ms
+              </div>
+              <span class="text-[11px] text-slate-400">Yerel Yükleme</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm text-center">
+              <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Ağ Bağlantısı</span>
+              <div id="networkMetric" class="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                Çevrimiçi
+              </div>
+              <span class="text-[11px] text-slate-400">Tarayıcı Durumu</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm text-center">
+              <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Ekran Boyutu</span>
+              <div id="screenMetric" class="mt-1 text-2xl font-bold text-slate-800 dark:text-slate-100">
+                1920x1080
+              </div>
+              <span class="text-[11px] text-slate-400">Dinamik Algılama</span>
+            </div>
+
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a href="#test-alani" class="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm shadow-lg shadow-brand-600/30 transition transform hover:-translate-y-0.5 active:translate-y-0">
+              Etkileşimli Testleri Aç
+            </a>
+            <button onclick="runAllDiagnostics()" class="px-6 py-3 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm transition">
+              Sistem Testini Başlat ⚡
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= INTERACTIVE TEST PLAYGROUND ================= -->
+    <section id="test-alani" class="py-16 bg-slate-100/60 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-xl mx-auto mb-12">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Etkileşimli Test Alanı</h2>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+            Aşağıdaki kutulardan farklı ön yüz mekanizmalarını ve DOM tepkilerini anında test edebilirsiniz.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+          <!-- TEST 1: Bildirim / Toast Motoru -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                  <span class="p-2 rounded-xl bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                  </span>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">1. Toast & Bildirim Testi</h3>
+                    <p class="text-xs text-slate-500">Dinamik toast penceresi tetikleme</p>
+                  </div>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">UI Toast</span>
+              </div>
+
+              <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">
+                Farklı türdeki bildirim mesajlarını sağ alt köşede canlandırmak için aşağıdaki butonlara tıklayın:
+              </p>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <button onclick="showToast('İşlem başarıyla tamamlandı!', 'success')" class="px-3 py-2 text-xs font-semibold rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-800 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/80 dark:text-emerald-300 transition border border-emerald-300 dark:border-emerald-800">
+                  ✓ Başarılı
+                </button>
+                <button onclick="showToast('Dikkat: Bu bir uyarı mesajıdır.', 'warning')" class="px-3 py-2 text-xs font-semibold rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-950/60 dark:hover:bg-amber-900/80 dark:text-amber-300 transition border border-amber-300 dark:border-amber-800">
+                  ⚠ Uyarı
+                </button>
+                <button onclick="showToast('Hata: Bağlantı zaman aşımına uğradı!', 'error')" class="px-3 py-2 text-xs font-semibold rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-800 dark:bg-rose-950/60 dark:hover:bg-rose-900/80 dark:text-rose-300 transition border border-rose-300 dark:border-rose-800">
+                  ✕ Hata
+                </button>
+                <button onclick="showToast('Bilgilendirme: Yeni sürüm mevcut.', 'info')" class="px-3 py-2 text-xs font-semibold rounded-xl bg-sky-100 hover:bg-sky-200 text-sky-800 dark:bg-sky-950/60 dark:hover:bg-sky-900/80 dark:text-sky-300 transition border border-sky-300 dark:border-sky-800">
+                  ℹ Bilgi
+                </button>
+              </div>
+            </div>
+
+            <!-- Sayac bolumu -->
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+              <span>Tetiklenen bildirim sayısı: <strong id="toastCount" class="text-brand-600 font-bold">0</strong></span>
+              <button onclick="clearAllToasts()" class="hover:text-rose-500 transition">Hepsini Kapat</button>
+            </div>
+          </div>
+
+          <!-- TEST 2: Modal & Dialog Testi -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                  <span class="p-2 rounded-xl bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                    </svg>
+                  </span>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">2. Modal & Pencere Testi</h3>
+                    <p class="text-xs text-slate-500">Pop-up, odak ve arka plan kilitleme</p>
+                  </div>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Dialog</span>
+              </div>
+
+              <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">
+                Arka planı bulanıklaştıran ve ESC tuşu ya da dışarı tıklama ile kapanabilen modern modal yapısını test edin.
+              </p>
+
+              <div class="flex flex-wrap gap-3">
+                <button onclick="openModal('Örnek Test Modalı', 'Bu modal penceresi JavaScript ile dinamik olarak tetiklenmiştir. Klavye ESC tuşu, arka plan tıklaması veya kapat butonlarıyla kapatılabilir.')" class="px-4 py-2.5 text-xs font-semibold rounded-xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 transition flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  Test Modalını Aç
+                </button>
+
+                <button onclick="openConfirmModal()" class="px-4 py-2.5 text-xs font-semibold rounded-xl bg-rose-600 hover:bg-rose-700 text-white transition flex items-center gap-2">
+                  Onay Diyalogu (Confirm)
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+              <span>Klavye erişilebilirliği: <strong class="text-emerald-500">Aktif (ESC)</strong></span>
+              <span>Backdrop Blur: <strong class="text-emerald-500">Aktif</strong></span>
+            </div>
+          </div>
+
+          <!-- TEST 3: Mock API & Asenkron İstek Testi -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                  <span class="p-2 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </span>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">3. Asenkron Veri / API Testi</h3>
+                    <p class="text-xs text-slate-500">Fetch simülasyonu & JSON Ayrıştırma</p>
+                  </div>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Async / Await</span>
+              </div>
+
+              <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+                Asenkron bir veri çekme (fetch) isteğini gecikmeli olarak simüle edin ve JSON çıktısını izleyin:
+              </p>
+
+              <div class="flex gap-2 mb-3">
+                <button id="fetchBtn" onclick="simulateApiRequest()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition flex items-center gap-2">
+                  <span id="fetchSpinner" class="hidden w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  <span id="fetchBtnText">Mock Veri Getir (GET)</span>
+                </button>
+                <button onclick="clearApiOutput()" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium transition">
+                  Temizle
+                </button>
+              </div>
+
+              <!-- JSON Output Preview -->
+              <div class="relative">
+                <pre id="apiOutput" class="p-3.5 rounded-xl bg-slate-900 text-emerald-400 text-xs font-mono overflow-x-auto max-h-36 border border-slate-800">// Henüz istek yapılmadı. Butona tıklayınız...</pre>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+              <span>HTTP Metodu: <code class="text-indigo-400">GET /api/v1/izin-test</code></span>
+              <span id="fetchDuration">Beklemede</span>
+            </div>
+          </div>
+
+          <!-- TEST 4: Form & Doğrulama (Validation) Testi -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                  <span class="p-2 rounded-xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                  </span>
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">4. Form & Validasyon Testi</h3>
+                    <p class="text-xs text-slate-500">HTML5 + JS Girdi Denetimi</p>
+                  </div>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Form Test</span>
+              </div>
+
+              <form id="testForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Talep Sahibi / Yetkili Adı</label>
+                  <input type="text" id="testNameInput" required placeholder="Örn: Mehmet Yılmaz" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500 transition" />
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Ada / Parsel No</label>
+                    <input type="text" id="testParcelInput" required placeholder="Örn: 104 / 12" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500 transition" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">İzin Türü</label>
+                    <select id="testTypeInput" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
+                      <option value="Yol İzni">Orman Yolu İzni</option>
+                      <option value="Tesis İzni">Altyapı & Tesis İzni</option>
+                      <option value="Rehabilitasyon">Rehabilitasyon İzni</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                  <button type="submit" class="flex-1 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition">
+                    Formu Gönder (Test Et)
+                  </button>
+                  <button type="reset" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                    Sıfırla
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500">
+              <span id="formStatusMsg">Lütfen formu doldurup göndermeyi deneyin.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SYSTEM DIAGNOSTICS ================= -->
+    <section id="sistem-durumu" class="py-16 border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>Sistem ve Donanım Tanılamaları</span>
+              <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            </h2>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Tarayıcınızın donanım ve API kabiliyetleri gerçek zamanlı olarak okunur.</p>
+          </div>
+          <button onclick="refreshDiagnostics()" class="self-start sm:self-auto px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Tanılamaları Yenile
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- Box 1 -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tarayıcı & Çekirdek</span>
+            <p id="diagBrowser" class="mt-2 text-sm font-semibold text-slate-800 dark:text-slate-200 break-words">-</p>
+            <span class="text-[11px] text-slate-400 mt-1 block">Platform: <span id="diagPlatform">-</span></span>
+          </div>
+
+          <!-- Box 2 -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Yerel Saat & Zaman Dilimi</span>
+            <p id="diagTime" class="mt-2 text-lg font-bold font-mono text-brand-600 dark:text-brand-400">-</p>
+            <span class="text-[11px] text-slate-400 mt-1 block">Zaman Dilimi: <span id="diagTimezone">-</span></span>
+          </div>
+
+          <!-- Box 3 -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Depolama & Çerezler</span>
+            <div class="mt-2 space-y-1 text-xs">
+              <div class="flex justify-between">
+                <span class="text-slate-500">LocalStorage:</span>
+                <span id="diagLocalStorage" class="font-semibold text-emerald-500">Destekleniyor</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">SessionStorage:</span>
+                <span id="diagSessionStorage" class="font-semibold text-emerald-500">Destekleniyor</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Cookies (Çerez):</span>
+                <span id="diagCookies" class="font-semibold text-emerald-500">Etkin</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Box 4 -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Ekran & Çözünürlük</span>
+            <div class="mt-2 space-y-1 text-xs">
+              <div class="flex justify-between">
+                <span class="text-slate-500">İç Pencere:</span>
+                <span id="diagViewport" class="font-semibold text-slate-700 dark:text-slate-300">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Piksel Oranı (DPR):</span>
+                <span id="diagDPR" class="font-semibold text-slate-700 dark:text-slate-300">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Renk Derinliği:</span>
+                <span id="diagColorDepth" class="font-semibold text-slate-700 dark:text-slate-300">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Box 5 -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">İşlemci & Donanım İpuçları</span>
+            <div class="mt-2 space-y-1 text-xs">
+              <div class="flex justify-between">
+                <span class="text-slate-500">CPU Mantıksal Çekirdek:</span>
+                <span id="diagCores" class="font-semibold text-slate-700 dark:text-slate-300">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Cihaz Belleği (RAM):</span>
+                <span id="diagMemory" class="font-semibold text-slate-700 dark:text-slate-300">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Dokunmatik Ekran:</span>
+                <span id="diagTouch" class="font-semibold text-slate-700 dark:text-slate-300">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Box 6 -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Bağlantı & Protokol</span>
+            <div class="mt-2 space-y-1 text-xs">
+              <div class="flex justify-between">
+                <span class="text-slate-500">Protokol:</span>
+                <span id="diagProtocol" class="font-semibold text-brand-600 font-mono">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Ana Makine:</span>
+                <span id="diagHost" class="font-semibold text-slate-700 dark:text-slate-300 font-mono">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Dil (Locale):</span>
+                <span id="diagLang" class="font-semibold text-slate-700 dark:text-slate-300">-</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= UI COMPONENTS SHOWCASE ================= -->
+    <section id="bilesenler" class="py-16 bg-slate-100/60 dark:bg-slate-900/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-xl mx-auto mb-12">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">UI Bileşen Vitrini</h2>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+            Hazır stillendirilmiş düğmeler, rozetler, akordeon ve durum göstergeleri.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Component 1: Rozetler & Etiketler -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-slate-400">Rozet & Etiket Testi</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-brand-100 text-brand-800 dark:bg-brand-900/40 dark:text-brand-300">Aktif İzin</span>
+              <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">İncelemede</span>
+              <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300">Reddedildi</span>
+              <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-300">Taslak</span>
+              <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300">Arşiv</span>
+            </div>
+
+            <div class="mt-6">
+              <h4 class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">İlerleme Çubukları (Progress)</h4>
+              <div class="space-y-3">
+                <div>
+                  <div class="flex justify-between text-xs mb-1 text-slate-500">
+                    <span>Dosya Doğrulama</span>
+                    <span>%85</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                    <div class="h-full bg-brand-500 rounded-full" style="width: 85%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-1 text-slate-500">
+                    <span>Saha İnceleme</span>
+                    <span>%40</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                    <div class="h-full bg-teal-500 rounded-full" style="width: 40%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Component 2: Akordeon (Accordion) -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-slate-400">Akordeon Sıkça Sorulanlar</h3>
+            
+            <div class="space-y-2.5" id="accordionContainer">
+              <div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                <button onclick="toggleAccordion('acc1')" class="w-full px-4 py-3 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                  <span>Bu test sayfası ne işe yarar?</span>
+                  <span id="accIcon1" class="transform transition-transform text-slate-400">▼</span>
+                </button>
+                <div id="acc1" class="hidden px-4 pb-3 text-xs text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800/50 pt-2">
+                  Frontend mekanizmalarını, CSS geçişlerini ve JavaScript fonksiyonlarını hızlıca doğrulamak için tasarlanmıştır.
+                </div>
+              </div>
+
+              <div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                <button onclick="toggleAccordion('acc2')" class="w-full px-4 py-3 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                  <span>Karanlık mod ayarı kaydediliyor mu?</span>
+                  <span id="accIcon2" class="transform transition-transform text-slate-400">▼</span>
+                </button>
+                <div id="acc2" class="hidden px-4 pb-3 text-xs text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800/50 pt-2">
+                  Evet, tarayıcının <code>localStorage</code> alanına kaydedilir ve sayfa yenilense bile tercihiniz hatırlanır.
+                </div>
+              </div>
+
+              <div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                <button onclick="toggleAccordion('acc3')" class="w-full px-4 py-3 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                  <span>Bağımlılık veya derleme gerekiyor mu?</span>
+                  <span id="accIcon3" class="transform transition-transform text-slate-400">▼</span>
+                </button>
+                <div id="acc3" class="hidden px-4 pb-3 text-xs text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800/50 pt-2">
+                  Hayır, tamamen bağımsız tek bir HTML dosyasıdır. Çift tıklayarak doğrudan tarayıcıda açabilirsiniz.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Component 3: Canlı Sayaç & Etkileşim -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-slate-400">Durum Sayacı (State Test)</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-4">
+                DOM reaktifliğini ve JS değişken durumunu test edin:
+              </p>
+
+              <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 text-center border border-slate-200 dark:border-slate-700">
+                <span class="text-xs text-slate-400 uppercase font-semibold">Sayaç Değeri</span>
+                <div id="counterValue" class="text-4xl font-black text-slate-900 dark:text-white my-2">0</div>
+                <div class="flex items-center justify-center gap-2 mt-3">
+                  <button onclick="changeCounter(-1)" class="w-9 h-9 rounded-xl bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-100 dark:hover:bg-slate-600 active:scale-90 transition">
+                    -
+                  </button>
+                  <button onclick="resetCounter()" class="px-3 h-9 rounded-xl bg-slate-200 dark:bg-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
+                    Sıfırla
+                  </button>
+                  <button onclick="changeCounter(1)" class="w-9 h-9 rounded-xl bg-brand-600 text-white font-bold hover:bg-brand-700 active:scale-90 transition">
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 text-center">
+              Reaktif DOM güncellemeleri başarıyla işleniyor.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-10 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-brand-600 flex items-center justify-center text-white text-xs font-bold">
+            OI
+          </div>
+          <span class="text-sm font-bold text-slate-800 dark:text-slate-200">Ormanİzin Test Prototipi</span>
+          <span class="text-xs text-slate-400">© 2026</span>
+        </div>
+
+        <div class="flex items-center gap-6 text-xs font-medium text-slate-500 dark:text-slate-400">
+          <a href="#genel-bakis" class="hover:text-brand-600 dark:hover:text-brand-400 transition">Başa Dön ↑</a>
+          <a href="#test-alani" class="hover:text-brand-600 dark:hover:text-brand-400 transition">Testler</a>
+          <a href="#sistem-durumu" class="hover:text-brand-600 dark:hover:text-brand-400 transition">Tanılama</a>
+          <button onclick="showToast('Test sürümü - Tüm hakları saklıdır.', 'info')" class="hover:text-brand-600 dark:hover:text-brand-400 transition">Hakkında</button>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= TOAST CONTAINER ================= -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- ================= GENERIC MODAL ================= -->
+  <div id="testModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0 pointer-events-none">
+    <div id="modalCard" class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-md w-full p-6 transform scale-95 transition-transform pointer-events-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+        <h3 id="modalTitle" class="text-base font-bold text-slate-900 dark:text-white">Modal Başlığı</h3>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          ✕
+        </button>
+      </div>
+      <div class="py-4">
+        <p id="modalBody" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+          Modal içeriği...
+        </p>
+      </div>
+      <div id="modalActions" class="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-2">
+        <button onclick="closeModal()" class="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+          Tamam
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // --- 1. DARK / LIGHT MODE CONTROLLER ---
+    const htmlEl = document.documentElement;
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        htmlEl.classList.add('dark');
+        localStorage.setItem('oi_theme', 'dark');
+      } else {
+        htmlEl.classList.remove('dark');
+        localStorage.setItem('oi_theme', 'light');
+      }
+    }
+
+    // Load initial theme
+    const savedTheme = localStorage.getItem('oi_theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      applyTheme(true);
+    } else {
+      applyTheme(false);
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      const isCurrentlyDark = htmlEl.classList.contains('dark');
+      applyTheme(!isCurrentlyDark);
+      showToast(isCurrentlyDark ? 'Aydınlık moda geçildi ☀️' : 'Karanlık moda geçildi 🌙', 'info');
+    });
+
+
+    // --- 2. TOAST ENGINE ---
+    let toastCounter = 0;
+    const toastContainer = document.getElementById('toastContainer');
+    const toastCountDisplay = document.getElementById('toastCount');
+
+    function showToast(message, type = 'info') {
+      toastCounter++;
+      toastCountDisplay.innerText = toastCounter;
+
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto transform translate-y-2 opacity-0 transition-all duration-300 flex items-start gap-3 p-3.5 rounded-2xl shadow-xl text-xs border';
+
+      let bgClass = '';
+      let icon = '';
+
+      switch (type) {
+        case 'success':
+          bgClass = 'bg-emerald-900/95 text-emerald-100 border-emerald-700/60';
+          icon = '✓';
+          break;
+        case 'warning':
+          bgClass = 'bg-amber-900/95 text-amber-100 border-amber-700/60';
+          icon = '⚠';
+          break;
+        case 'error':
+          bgClass = 'bg-rose-900/95 text-rose-100 border-rose-700/60';
+          icon = '✕';
+          break;
+        default:
+          bgClass = 'bg-slate-900/95 text-slate-100 border-slate-700/60';
+          icon = 'ℹ';
+      }
+
+      toast.className += ` ${bgClass}`;
+      toast.innerHTML = `
+        <span class="font-bold text-sm leading-none mt-0.5">${icon}</span>
+        <div class="flex-1 leading-snug">${message}</div>
+        <button onclick="this.parentElement.remove()" class="opacity-70 hover:opacity-100 ml-1 text-sm font-bold">×</button>
+      `;
+
+      toastContainer.appendChild(toast);
+
+      // Trigger entrance animation
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      // Auto dismiss after 4 seconds
+      setTimeout(() => {
+        if (toast.parentElement) {
+          toast.classList.add('opacity-0', 'translate-y-2');
+          setTimeout(() => toast.remove(), 300);
+        }
+      }, 4000);
+    }
+
+    function clearAllToasts() {
+      toastContainer.innerHTML = '';
+      showToast('Tüm bildirimler temizlendi.', 'info');
+    }
+
+
+    // --- 3. MODAL CONTROLLER ---
+    const testModal = document.getElementById('testModal');
+    const modalCard = document.getElementById('modalCard');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalActions = document.getElementById('modalActions');
+
+    function openModal(title, content) {
+      modalTitle.innerText = title;
+      modalBody.innerText = content;
+      modalActions.innerHTML = `
+        <button onclick="closeModal()" class="px-4 py-2 text-xs font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white transition">
+          Tamamdır
+        </button>
+      `;
+      displayModal();
+    }
+
+    function openConfirmModal() {
+      modalTitle.innerText = 'İşlemi Onaylıyor musunuz?';
+      modalBody.innerText = 'Bu bir onay diyalogu testidir. Devam etmek için onayla butonuna tıklayın.';
+      modalActions.innerHTML = `
+        <button onclick="closeModal()" class="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+          İptal
+        </button>
+        <button onclick="confirmAction()" class="px-4 py-2 text-xs font-semibold rounded-xl bg-rose-600 hover:bg-rose-700 text-white transition">
+          Evet, Onayla
+        </button>
+      `;
+      displayModal();
+    }
+
+    function confirmAction() {
+      closeModal();
+      showToast('Onaylama işlemi başarıyla simüle edildi!', 'success');
+    }
+
+    function displayModal() {
+      testModal.classList.remove('hidden', 'pointer-events-none');
+      requestAnimationFrame(() => {
+        testModal.classList.remove('opacity-0');
+        modalCard.classList.remove('scale-95');
+        modalCard.classList.add('scale-100');
+      });
+    }
+
+    function closeModal() {
+      testModal.classList.add('opacity-0');
+      modalCard.classList.add('scale-95');
+      modalCard.classList.remove('scale-100');
+      setTimeout(() => {
+        testModal.classList.add('hidden', 'pointer-events-none');
+      }, 200);
+    }
+
+    // Close on background click
+    testModal.addEventListener('click', (e) => {
+      if (e.target === testModal) closeModal();
+    });
+
+    // Close on ESC
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !testModal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+
+    // --- 4. API & ASYNC FETCH SIMULATOR ---
+    function simulateApiRequest() {
+      const btn = document.getElementById('fetchBtn');
+      const spinner = document.getElementById('fetchSpinner');
+      const btnText = document.getElementById('fetchBtnText');
+      const output = document.getElementById('apiOutput');
+      const durationDisplay = document.getElementById('fetchDuration');
+
+      btn.disabled = true;
+      spinner.classList.remove('hidden');
+      btnText.innerText = 'Yükleniyor...';
+      output.innerText = '// İstek gönderildi, yanıt bekleniyor...';
+
+      const startTime = performance.now();
+
+      // Simulated network latency (650ms)
+      setTimeout(() => {
+        const endTime = performance.now();
+        const duration = Math.round(endTime - startTime);
+
+        const mockData = {
+          status: 200,
+          mesaj: "Veri alma işlemi başarılı",
+          timestamp: new Date().toISOString(),
+          test_sonuclari: {
+            sistem_aktif: true,
+            gecikme_ms: duration,
+            izin_kayitlari: [
+              { id: 101, baslik: "Orman Yolu İzni - Parsel 42", durum: "Onaylandı" },
+              { id: 102, baslik: "Enerji Nakil Hattı", durum: "İncelemede" }
+            ]
+          }
+        };
+
+        output.innerText = JSON.stringify(mockData, null, 2);
+        durationDisplay.innerText = `${duration} ms içinde yanıtlandı`;
+        btn.disabled = false;
+        spinner.classList.add('hidden');
+        btnText.innerText = 'Mock Veri Getir (GET)';
+        showToast('Asenkron veri başarıyla getirildi!', 'success');
+      }, 650);
+    }
+
+    function clearApiOutput() {
+      document.getElementById('apiOutput').innerText = '// Çıktı temizlendi.';
+      document.getElementById('fetchDuration').innerText = 'Temizlendi';
+    }
+
+
+    // --- 5. FORM SUBMISSION TEST ---
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('testNameInput').value;
+      const parcel = document.getElementById('testParcelInput').value;
+      const type = document.getElementById('testTypeInput').value;
+      const statusMsg = document.getElementById('formStatusMsg');
+
+      statusMsg.innerHTML = `<span class="text-emerald-500 font-semibold">✓ Test Kaydı Alındı:</span> ${name} (${parcel}) — <strong>${type}</strong>`;
+      showToast(`Form gönderildi: ${name} (${type})`, 'success');
+    }
+
+
+    // --- 6. STATE COUNTER TEST ---
+    let count = 0;
+    const counterEl = document.getElementById('counterValue');
+
+    function changeCounter(delta) {
+      count += delta;
+      counterEl.innerText = count;
+    }
+
+    function resetCounter() {
+      count = 0;
+      counterEl.innerText = count;
+      showToast('Sayaç sıfırlandı.', 'info');
+    }
+
+
+    // --- 7. ACCORDION CONTROLLER ---
+    function toggleAccordion(id) {
+      const el = document.getElementById(id);
+      const icon = document.getElementById('accIcon' + id.replace('acc', ''));
+      const isHidden = el.classList.contains('hidden');
+
+      // Close other accordions
+      ['acc1', 'acc2', 'acc3'].forEach(otherId => {
+        document.getElementById(otherId).classList.add('hidden');
+        const otherIcon = document.getElementById('accIcon' + otherId.replace('acc', ''));
+        if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+      });
+
+      if (isHidden) {
+        el.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+
+    // --- 8. SYSTEM DIAGNOSTICS & METRICS ---
+    function refreshDiagnostics() {
+      // Browser info
+      const ua = navigator.userAgent;
+      let browserName = 'Bilinmeyen Tarayıcı';
+      if (ua.includes('Chrome')) browserName = 'Google Chrome / Chromium';
+      if (ua.includes('Firefox')) browserName = 'Mozilla Firefox';
+      if (ua.includes('Safari') && !ua.includes('Chrome')) browserName = 'Apple Safari';
+      if (ua.includes('Edg')) browserName = 'Microsoft Edge';
+
+      document.getElementById('diagBrowser').innerText = browserName;
+      document.getElementById('diagPlatform').innerText = navigator.platform || 'Bilinmiyor';
+
+      // Time
+      const now = new Date();
+      document.getElementById('diagTime').innerText = now.toLocaleTimeString('tr-TR');
+      document.getElementById('diagTimezone').innerText = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Yerel';
+
+      // Viewport & Screen
+      const vpWidth = window.innerWidth;
+      const vpHeight = window.innerHeight;
+      document.getElementById('diagViewport').innerText = `${vpWidth} × ${vpHeight} px`;
+      document.getElementById('diagDPR').innerText = `${window.devicePixelRatio || 1}x`;
+      document.getElementById('diagColorDepth').innerText = `${screen.colorDepth || 24}-bit`;
+
+      // Screen metric in hero
+      document.getElementById('screenMetric').innerText = `${vpWidth}x${vpHeight}`;
+
+      // CPU Cores & Hardware
+      document.getElementById('diagCores').innerText = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} Çekirdek` : 'Algılanamadı';
+      document.getElementById('diagMemory').innerText = navigator.deviceMemory ? `~${navigator.deviceMemory} GB RAM` : 'Desteklenmiyor';
+      document.getElementById('diagTouch').innerText = ('ontouchstart' in window || navigator.maxTouchPoints > 0) ? 'Evet' : 'Hayır';
+
+      // Network & Protocol
+      document.getElementById('diagProtocol').innerText = window.location.protocol;
+      document.getElementById('diagHost').innerText = window.location.host || 'Yerel Dosya (File)';
+      document.getElementById('diagLang').innerText = navigator.language || 'tr-TR';
+
+      // Online status
+      const isOnline = navigator.onLine;
+      const netMetric = document.getElementById('networkMetric');
+      if (isOnline) {
+        netMetric.innerText = 'Çevrimiçi';
+        netMetric.className = 'mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400';
+      } else {
+        netMetric.innerText = 'Çevrimdışı';
+        netMetric.className = 'mt-1 text-2xl font-bold text-rose-600 dark:text-rose-400';
+      }
+
+      // Storage support checks
+      try {
+        localStorage.setItem('__test__', '1');
+        localStorage.removeItem('__test__');
+        document.getElementById('diagLocalStorage').innerText = 'Aktif (Erişilebilir)';
+      } catch (e) {
+        document.getElementById('diagLocalStorage').innerText = 'Devre Dışı';
+      }
+
+      try {
+        sessionStorage.setItem('__test__', '1');
+        sessionStorage.removeItem('__test__');
+        document.getElementById('diagSessionStorage').innerText = 'Aktif (Erişilebilir)';
+      } catch (e) {
+        document.getElementById('diagSessionStorage').innerText = 'Devre Dışı';
+      }
+
+      document.getElementById('diagCookies').innerText = navigator.cookieEnabled ? 'Etkin' : 'Devre Dışı';
+    }
+
+    function runAllDiagnostics() {
+      refreshDiagnostics();
+      showToast('Tüm sistem tanılamaları başarıyla güncellendi!', 'success');
+    }
+
+    // Live clock updater
+    setInterval(() => {
+      const now = new Date();
+      const timeEl = document.getElementById('diagTime');
+      if (timeEl) timeEl.innerText = now.toLocaleTimeString('tr-TR');
+    }, 1000);
+
+    // Resize listener to update screen resolution live
+    window.addEventListener('resize', () => {
+      document.getElementById('diagViewport').innerText = `${window.innerWidth} × ${window.innerHeight} px`;
+      document.getElementById('screenMetric').innerText = `${window.innerWidth}x${window.innerHeight}`;
+    });
+
+    // Run diagnostics on load
+    window.addEventListener('DOMContentLoaded', () => {
+      refreshDiagnostics();
+    });
+    refreshDiagnostics();
+  </script>
+</body>
+</html>
